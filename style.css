@@ -1,0 +1,69 @@
+body {
+    background: #080808;
+    color: #eeeeee;
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+#balance {
+    color: #65ed83;
+}
+
+.earn-area {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 300px;
+    margin-top: 24px;
+    border: 2px dashed #7c83ff;
+    border-radius: 20px;
+    background: #111111;
+    color: #65ed83;
+    font-size: 24px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.earn-area:hover {
+    background: #23284b;
+}
+
+.earn-area:active {
+    background: #343b68;
+}
+
+.earn-area:focus-visible {
+    outline: 3px solid #7c83ff;
+    outline-offset: 4px;
+}
+
+.money-pop {
+    position: absolute;
+    color: #65ed83;
+    font-size: 28px;
+    text-shadow: 0 0 12px #65ed83;
+    pointer-events: none;
+    user-select: none;
+    animation: evaporate 900ms ease-out forwards;
+}
+
+@keyframes evaporate {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -120px) scale(0.8);
+        filter: blur(3px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .money-pop {
+        animation-duration: 1ms;
+    }
+}
