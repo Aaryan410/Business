@@ -10,7 +10,7 @@ earnButton.addEventListener("click", (event) => {
 
     const popup = document.createElement("span");
     popup.className = "money-pop";
-    popup.textContent = `-$${moneyPerClick}`;
+    popup.textContent = `+$${moneyPerClick}`;
     popup.setAttribute("aria-hidden", "true");
 
     const area = earnButton.getBoundingClientRect();
