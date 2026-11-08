@@ -43,7 +43,6 @@ body {
     position: absolute;
     color: #65ed83;
     font-size: 28px;
-    text-shadow: 0 0 12px #65ed83;
     pointer-events: none;
     user-select: none;
     animation: evaporate 900ms ease-out forwards;
