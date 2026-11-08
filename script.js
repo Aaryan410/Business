@@ -1,35 +1,90 @@
-let money = 0;
-let moneyPerClick = 100;
-let moneyPerSecond = 10;
+let money = 0n;
+let moneyPerClick = 100n;
+let moneyPerSecond = 10n;
+
+let multiplier = 1n;
+let multiplierCost = 500n;
 
 const balance = document.getElementById("balance");
 const earnButton = document.getElementById("earn-button");
-
 const incomeRate = document.getElementById("income-rate");
 
-function formatMoney(cents) {
-    return (cents / 100).toFixed(2);
+const multiplierDisplay = document.getElementById("multiplier");
+const multiplierButton = document.getElementById("multiplier-button");
+
+
+// large number display logic
+function formatNumber(value) {
+    const digits = value.toString();
+
+    if (digits.length <= 3) {
+        return digits;
+    }
+
+    const suffixes = [
+        "", "K", "M", "B", "T", 
+        "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"
+    ];
+
+    const group = Math.floor((digits.length - 1) / 3);
+
+    if (group >= suffixes.length) {
+        return `${digits[0]}.${digits.slice(1, 3)}e${digits.length - 1}`;
+    }
+
+    const leading = digits.length - group * 3;
+
+    return (
+        digits.slice(0, leading) +
+        "." +
+        digits.slice(leading, leading + 2) +
+        suffixes[group]
+    );
 }
 
+function formatMoney(cents) {
+    const dollars = cents / 100n;
+    const remainder = (cents % 100n).toString().padStart(2, "0");
+
+    if (dollars < 100n) {
+        return `${dollars}.${remainder}`;
+    }
+
+    return formatNumber(dollars);
+}
+
+
+// display logic
 function updateDisplay() {
     balance.textContent = formatMoney(money);
     incomeRate.textContent = formatMoney(moneyPerSecond);
+
+    multiplierDisplay.textContent = formatNumber(multiplier);
+
+    multiplierButton.textContent =
+        `Upgrade to ${multiplier * 2n}× - $${formatMoney(multiplierCost)}`;
+
+    multiplierButton.disabled = money < multiplierCost;
 }
 
 updateDisplay();
 
+
+// timer logic
 setInterval(() => {
     money += moneyPerSecond;
     updateDisplay();
 }, 1000);
 
+
+// click logic
 earnButton.addEventListener("click", (event) => {
-    money += moneyPerClick;
+    money += moneyPerClick * multiplier;
     updateDisplay();
 
     const popup = document.createElement("span");
     popup.className = "money-pop";
-    popup.textContent = `+$${formatMoney(moneyPerClick)}`;
+    popup.textContent = `+$${formatMoney(moneyPerClick * multiplier)}`;
     popup.setAttribute("aria-hidden", "true");
 
     const area = earnButton.getBoundingClientRect();
@@ -49,4 +104,18 @@ earnButton.addEventListener("click", (event) => {
     popup.addEventListener("animationend", () => {
         popup.remove();
     }, { once: true });
+});
+
+
+// multiplier button logic 
+multiplierButton.addEventListener("click", () => {
+    if (money < multiplierCost) {
+        return;
+    }
+
+    money -= multiplierCost;
+    multiplier *= 2n;
+    multiplierCost *= 3n;
+
+    updateDisplay();
 });

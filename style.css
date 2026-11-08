@@ -73,3 +73,22 @@ select,
 textarea {
     font-family: inherit;
 }
+
+.upgrade-button {
+    padding: 14px 22px; 
+    border: 1px solid #65ed83;
+    border-radius: 10px;
+    background: #151515;
+    color: #65ed83;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.upgrade-button:hover:not(:disabled) {
+    background: #1b2a1e;
+}
+
+.upgrade-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
