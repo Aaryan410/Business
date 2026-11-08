@@ -1,9 +1,14 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background: #080808;
     color: #eeeeee;
     font-family: "Space Grotesk", sans-serif;
-    max-width: 900px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 100dvh;
+    margin: 0;
     padding: 24px;
 }
 
@@ -91,4 +96,147 @@ textarea {
 .upgrade-button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+.game-layout {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr) 260px;
+    gap: 24px;
+    align-items: start;
+}
+
+.sidebar,
+.upgrades {
+    padding: 20px;
+    background: #111111;
+    border: 1px solid #252525;
+    border-radius: 16px;
+}
+
+.sidebar h2,
+.upgrades h2,
+.dashboard h1 {
+    margin-top: 0;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    display: flex;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #eeeeee;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+}
+
+.nav-item.active {
+    background: #18261b;
+    border-color: #286b38;
+    color: #65ed83;
+}
+
+.nav-item:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.sidebar-note {
+    color: #999999;
+    font-size: 13px;
+}
+
+.dashboard {
+    min-width: 0;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+}
+
+.earn-area {
+    min-height: 65vh;
+    margin-top: 16px;
+}
+
+.upgrade-card h3 {
+    margin-top: 0;
+}
+
+.upgrade-button {
+    width: 100%;
+    white-space: normal;
+}
+
+@media (max-width: 1100px) {
+    .game-layout {
+        grid-template-columns: 170px minmax(0, 1fr);
+    }
+
+    .sidebar {
+        grid-row: span 2;
+    }
+
+    .upgrades {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 12px;
+    }
+
+    .game-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .sidebar {
+        grid-row: auto;
+    }
+
+    .upgrades {
+        grid-column: auto;
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .nav-item {
+        width: auto;
+    }
+
+    .earn-area {
+        min-height: 50vh;
+    }
+}
+
+@media (min-width: 1101px) {
+    .game-layout {
+        min-height: calc(100dvh - 48px);
+        align-items: stretch;
+    }
+
+    .dashboard {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .earn-area {
+        flex: 1;
+        min-height: 300px;
+    }
 }

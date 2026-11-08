@@ -11,21 +11,75 @@
         <link href = "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel = "stylesheet">
     </head>
     <body>
-        <h1>Business</h1>
-        <p>Money: $<span id = "balance">0.00</span></p>
-        <p>Passive Income: $<span id = "income-rate">0.00</span> / second</p>
-        <button id = "earn-button" class = "earn-area">
-            Click anywhere to earn
-        </button>
+        <div class = "game-layout">
 
-        <p>Click multiplier: <span id = "multiplier">1</span></p>
-        <button id = "multiplier-button" class = "upgrade-button">
-            Upgrade to 2x - $5.00
-        </button>
+            <!-- left side bar for investment shi -->
+            <aside class = "sidebar">
+                <h2>Business</h2>
 
-        <p>Passive multiplier: <span id = "income-multiplier">1</span></p>
-        <button id = "income-multiplier-button" class = "upgrade-button">
-            Upgrade passive income to 2x - $5.00
-        </button>
+                <nav aria-label = "Game sections">
+                    <a href = "{{ url_for('dashboard') }}" class = "nav-item active" aria-current = "page">
+                        Dashboard
+                    </a>
+
+                    <button class = "nav-item" disabled>Companies</button>
+                    <button class = "nav-item" disabled>Stocks</button>
+                    <button class = "nav-item" disabled>Real Estate</button>
+                    <button class = "nav-item" disabled>Startups</button>
+                    <button class = "nav-item" disabled>Cars</button>
+                </nav>
+
+            </aside>
+
+            <!-- middle area for clicking -->
+            <main class = "dashboard">
+                <h1>Dashboard</h1>
+
+                <div class = "stats">
+                    <p>Money: $<span id = "balance">0.00</span></p>
+
+                    <p>
+                        Passive income:
+                        $<span id = "income-rate">0.00</span> / second
+                    </p>
+                </div>
+
+                <button id = "earn-button" class = "earn-area">
+                    Click anywhere to earn
+                </button>
+            </main>
+
+            <!-- right bar for multiplier shi -->
+            <aside class = "upgrades" aria-label = "Income upgrades">
+                <h2>Upgrades</h2>
+
+                <section class = "upgrade-card">
+                    <h3>Click income</h3>
+
+                    <p>
+                        Multiplier:
+                        <span id = "multiplier">1</span>×
+                    </p>
+
+                    <button id = "multiplier-button" class = "upgrade-button">
+                        Upgrade to 2x - $5.00
+                    </button>
+                </section>
+
+                <section class = "upgrade-card">
+                    <h3>Passive income</h3>
+
+                    <p>
+                        Multiplier:
+                        <span id = "income-multiplier">1</span>×
+                    </p>
+
+                    <button id = "income-multiplier-button" class = "upgrade-button">
+                        Upgrade to 2x - $5.00
+                    </button>
+                </section>
+            </aside>
+            
+        </div>
     </body>
 </html>
