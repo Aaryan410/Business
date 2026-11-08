@@ -5,6 +5,9 @@ let moneyPerSecond = 10n;
 let multiplier = 1n;
 let multiplierCost = 500n;
 
+let incomeMultiplier = 1n;
+let incomeMultiplierCost = 500n;
+
 const balance = document.getElementById("balance");
 const earnButton = document.getElementById("earn-button");
 const incomeRate = document.getElementById("income-rate");
@@ -54,6 +57,13 @@ function formatMoney(cents) {
 }
 
 
+const incomeMultiplierDisplay = 
+    document.getElementById("income-multiplier");
+
+const incomeMultiplierButton = 
+    document.getElementById("income-multiplier-button");
+
+
 // display logic
 function updateDisplay() {
     balance.textContent = formatMoney(money);
@@ -65,6 +75,19 @@ function updateDisplay() {
         `Upgrade to ${multiplier * 2n}× - $${formatMoney(multiplierCost)}`;
 
     multiplierButton.disabled = money < multiplierCost;
+
+    incomeRate.textContent = formatMoney(
+        moneyPerSecond * incomeMultiplier
+    );
+
+    incomeMultiplierDisplay.textContent =
+        formatNumber(incomeMultiplier);
+
+    incomeMultiplierButton.textContent =
+        `Upgrade passive income to ${formatNumber(incomeMultiplier * 2n)}× - $${formatMoney(incomeMultiplierCost)}`;
+
+    incomeMultiplierButton.disabled =
+        money < incomeMultiplierCost;
 }
 
 updateDisplay();
@@ -72,7 +95,7 @@ updateDisplay();
 
 // timer logic
 setInterval(() => {
-    money += moneyPerSecond;
+    money += moneyPerSecond * incomeMultiplier;
     updateDisplay();
 }, 1000);
 
@@ -107,7 +130,7 @@ earnButton.addEventListener("click", (event) => {
 });
 
 
-// multiplier button logic 
+// multiplier button logic for per click 
 multiplierButton.addEventListener("click", () => {
     if (money < multiplierCost) {
         return;
@@ -119,3 +142,17 @@ multiplierButton.addEventListener("click", () => {
 
     updateDisplay();
 });
+
+
+// multiplier button logic for per second
+incomeMultiplierButton.addEventListener("click", () => {
+    if (money < incomeMultiplierCost) {
+        return;
+    }
+
+    money -= incomeMultiplierCost;
+    incomeMultiplier *= 2n;
+    incomeMultiplierCost *= 3n;
+
+    updateDisplay();
+})
