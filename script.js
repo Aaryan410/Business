@@ -90,7 +90,59 @@ function updateDisplay() {
         money < incomeMultiplierCost;
 }
 
+
+// money data save logic
+function saveGame() {
+    const save = {
+        money: money.toString(),
+        multiplier: multiplier.toString(),
+        multiplierCost: multiplierCost.toString(),
+        incomeMultiplier: incomeMultiplier.toString(),
+        incomeMultiplierCost: incomeMultiplierCost.toString()
+    };
+
+    try {
+        localStorage.setItem("business-save", JSON.stringify(save));
+    } catch (error) {
+        console.warn("Could not save progress:", error);
+    }
+}
+
+
+function loadGame() {
+    try {
+        const stored = localStorage.getItem("business-save");
+
+        if (stored === null) {
+            return;
+        }
+
+        const data = JSON.parse(stored);
+
+        const restored = {
+            money: BigInt(data.money),
+            multiplier: BigInt(data.multiplier),
+            multiplierCost: BigInt(data.multiplierCost),
+            incomeMultiplier: BigInt(data.incomeMultiplier),
+            incomeMultiplierCost: BigInt(data.incomeMultiplierCost)
+        };
+
+        money = restored.money;
+        multiplier = restored.multiplier;
+        multiplierCost = restored.multiplierCost;
+        incomeMultiplier = restored.incomeMultiplier;
+    } catch (error) {
+        console.warn("Could not load progress:", error);
+    }
+}
+
+
+loadGame();
 updateDisplay();
+
+setInterval(saveGame, 5000)
+
+window.addEventListener("pagehide", saveGame);
 
 
 // timer logic
@@ -154,5 +206,6 @@ incomeMultiplierButton.addEventListener("click", () => {
     incomeMultiplier *= 2n;
     incomeMultiplierCost *= 3n;
 
+    saveGame();
     updateDisplay();
-})
+});
