@@ -35,7 +35,7 @@
                     <button class = "nav-item" disabled>Cars</button>
                 </nav>
 
-                <form method = "post" actions = "{{ url_for('logout') }}">
+                <form method = "post" action = "{{ url_for('logout') }}">
                     <input type = "hidden" name = "csrf_token" value = "{{ csrf_token() }}">
                     <button type = "submit" class = "nav-item">
                         Log out

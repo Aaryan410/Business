@@ -146,8 +146,19 @@ setInterval(saveGame, 5000)
 window.addEventListener("pagehide", saveGame);
 
 
+function canEarnMoney() {
+    return (
+        document.visibilityState === "visible" && 
+        navigator.onLine 
+    );
+}
+
 // timer logic
 setInterval(() => {
+    if (!canEarnMoney()) {
+        return;
+    }
+
     money += moneyPerSecond * incomeMultiplier;
     updateDisplay();
 }, 1000);
@@ -155,6 +166,10 @@ setInterval(() => {
 
 // click logic
 earnButton.addEventListener("click", (event) => {
+    if (!canEarnMoney()) {
+        return;
+    }
+
     money += moneyPerClick * multiplier;
     updateDisplay();
 
