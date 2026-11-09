@@ -131,6 +131,7 @@ function loadGame() {
         multiplier = restored.multiplier;
         multiplierCost = restored.multiplierCost;
         incomeMultiplier = restored.incomeMultiplier;
+        incomeMultiplierCost = restored.incomeMultiplierCost;
     } catch (error) {
         console.warn("Could not load progress:", error);
     }

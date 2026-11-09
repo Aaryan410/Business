@@ -22,12 +22,25 @@
                         Dashboard
                     </a>
 
+                    <a href = "{{ url_for('signup') }}" class = "nav-item">
+                        Account
+                    </a>
+
+                    <hr class = "nav-divider">
+
                     <button class = "nav-item" disabled>Companies</button>
                     <button class = "nav-item" disabled>Stocks</button>
                     <button class = "nav-item" disabled>Real Estate</button>
                     <button class = "nav-item" disabled>Startups</button>
                     <button class = "nav-item" disabled>Cars</button>
                 </nav>
+
+                <form method = "post" actions = "{{ url_for('logout') }}">
+                    <input type = "hidden" name = "csrf_token" value = "{{ csrf_token() }}">
+                    <button type = "submit" class = "nav-item">
+                        Log out
+                    </button>
+                </form>
 
             </aside>
 

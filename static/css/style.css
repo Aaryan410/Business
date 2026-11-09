@@ -240,3 +240,10 @@ textarea {
         min-height: 300px;
     }
 }
+
+.nav-divider {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #303030;
+    margin: 10px 0;
+}

@@ -1,0 +1,61 @@
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #111111;
+    border: 1px solid #303030;
+    border-radius: 16px;
+}
+
+.auth-card h1 {
+    margin-top: 0;
+}
+
+.auth-card label {
+    display: block;
+    margin: 20px 0 8px;
+}
+
+.auth-card input:not([type = "hidden"]) {
+    width: 100%;
+    padding: 12px;
+    background: #080808;
+    border: 1px solid #444444;
+    border-radius:  8px;
+    color: #eeeeee;
+    font: inherit;
+}
+
+.auth-card input:focus-visible {
+    outline: 2px solid #65ed83;
+    outline-offset: 3px;
+}
+
+.auth-card .upgrade-button {
+    margin-top: 24px;
+}
+
+.field-help {
+    color: #aaaaaa;
+    font-size: 13px;
+}
+
+.form-error {
+    color: #ff8585;
+}
+
+.form-help {
+    color: #aaaaaa;
+    font-size: 13px;
+}
+
+.form-success {
+    color: #65ed83;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #eeeeee;
+}
