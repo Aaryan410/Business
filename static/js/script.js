@@ -91,17 +91,40 @@ function updateDisplay() {
 }
 
 
-// money data save logic
-function saveGame() {
-    const save = {
+// saving game progres per logged account
+function getGameState() {
+    return {
         money: money.toString(),
         multiplier: multiplier.toString(),
         multiplierCost: multiplierCost.toString(),
         incomeMultiplier: incomeMultiplier.toString(),
-        incomeMultiplierCost: incomeMultiplierCost.toString()
+        incomeMultiplierCost: incomeMultiplierCost.toString(),
     };
+}
 
+
+function applyGameState(data) {
+    const restored = {
+        money: BigInt(data.money),
+        multiplier: BigInt(data.multiplier),
+        multiplierCost: BigInt(data.multiplierCost),
+        incomeMultiplier: BigInt(data.incomeMultiplier),
+        incomeMultiplierCost: BigInt(data.incomeMultiplierCost),
+    }
+
+    money = restored.money;
+    multiplier = restored.multiplier;
+    multiplierCost = restored.multiplierCost;
+    incomeMultiplier = restored.incomeMultiplier;
+    incomeMultiplierCost = restored.incomeMultiplierCost;
+}
+
+
+// money data save logic
+function saveGame() {
     try {
+        const save = getGameState();
+
         localStorage.setItem("business-save", JSON.stringify(save));
     } catch (error) {
         console.warn("Could not save progress:", error);
@@ -117,21 +140,8 @@ function loadGame() {
             return;
         }
 
-        const data = JSON.parse(stored);
-
-        const restored = {
-            money: BigInt(data.money),
-            multiplier: BigInt(data.multiplier),
-            multiplierCost: BigInt(data.multiplierCost),
-            incomeMultiplier: BigInt(data.incomeMultiplier),
-            incomeMultiplierCost: BigInt(data.incomeMultiplierCost)
-        };
-
-        money = restored.money;
-        multiplier = restored.multiplier;
-        multiplierCost = restored.multiplierCost;
-        incomeMultiplier = restored.incomeMultiplier;
-        incomeMultiplierCost = restored.incomeMultiplierCost;
+        const data =JSON.parse(stored);
+        applyGameState(data);
     } catch (error) {
         console.warn("Could not load progress:", error);
     }
