@@ -1,10 +1,11 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, flash, redirect, render_template, request, url_for, session
-from flask_wtf.csrf import CSRFProtect
+from flask import Flask, flash, redirect, render_template, request, url_for, session, jsonify
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from psycopg import Error as DatabaseError
 
+from backend.game_saves import load_game, save_game
 from backend.accounts import create_account, authenticate_account
 
 load_dotenv()
@@ -106,6 +107,42 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+
+@app.route("/api/game", methods = ["GET", "POST"])
+def game_progress():
+    account_id = session.get("user_id")
+
+    if not account_id:
+        return jsonify(error = "Please log in first."), 401
+
+    try:
+        if request.method == "GET":
+            saved_progress = load_game(account_id)
+
+            return jsonify(
+                accountId = account_id,
+                save = saved_progress,
+                csrfToken = generate_csrf(),
+            )
+
+        data = request.get_json(silent = True)
+        save_game(account_id, data)
+
+    except ValueError as error:
+        return jsonify(error = str(error)), 400
+
+    except DatabaseError:
+        app.logger.exception("Gave save/load failed")
+
+        return jsonify(
+            error = "Could not access your saved progress. Please try again."
+        ), 503
+
+    return jsonify(
+        saved = True,
+        csrfToken = generate_csrf(),
+    )
 
 
 if __name__ == "__main__":
